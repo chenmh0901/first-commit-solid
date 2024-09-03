@@ -2,6 +2,7 @@ import { DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuIte
 import { Button } from './ui/button'
 import { Icon } from '@iconify-icon/solid'
 import { useColorMode, ConfigColorMode } from "@kobalte/core"
+import { createSignal, createEffect } from "solid-js";
 
 export interface ThemeItem {
   name: string;
@@ -9,7 +10,15 @@ export interface ThemeItem {
   mode: ConfigColorMode;
 }
 export const ThemeToggle = () => {
-  const { setColorMode } = useColorMode()
+  const { colorMode, setColorMode } = useColorMode()
+  const [selectedTheme, setSelectedTheme] = createSignal<ThemeItem>(
+    {
+      name: 'Light',
+      icon: 'material-symbols-light:sunny-outline-rounded',
+      mode: 'light'
+    }
+  )
+
   const themeItems: ThemeItem[] = [
     {
       name: 'Light',
@@ -27,12 +36,17 @@ export const ThemeToggle = () => {
       mode: 'system'
     },
   ];
+
+  createEffect(() => {
+    const currentTheme = themeItems.find((item: ThemeItem) => item.mode === colorMode())
+    if (currentTheme) setSelectedTheme(currentTheme)
+  })
   return (
     <>
       <DropdownMenu placement="bottom">
         <DropdownMenuTrigger>
           <Button variant={'ghost'} size={'icon'}>
-            <Icon icon="material-symbols-light:sunny-outline-rounded" height={'20px'} width={'20px'} />
+            <Icon icon={selectedTheme().icon} height={'20px'} width={'20px'} />
           </Button>
         </DropdownMenuTrigger>
         <DropdownMenuContent >
