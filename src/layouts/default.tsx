@@ -11,8 +11,8 @@ export const DefaultLayout = (props: LayoutProps) => {
   return (
     <>
       <div class="min-h-screen flex flex-col">
-        <ColorModeScript></ColorModeScript>
-        <ColorModeProvider>
+        <ColorModeScript initialColorMode='light'></ColorModeScript>
+        <ColorModeProvider initialColorMode='light'>
           <Header />
           <main class="flex-1">{props.children}</main>
           <Footer />

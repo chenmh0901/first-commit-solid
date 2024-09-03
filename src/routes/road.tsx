@@ -1,6 +1,6 @@
 export default () => {
   return (
-    <div>
+    <div class="max-w-[1200px] mx-auto px-2 mt-2">
       <h1>road</h1>
     </div>
   );
